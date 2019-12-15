@@ -13,7 +13,7 @@
   "dependencies": {
     "discord.js": "^11.5.1"
   },
-  "author": "Ciaran Grimshaw",
-  "license": "ISC",
+  "author": "https://github.com/grims-dev",
+  "license": "MIT",
   "homepage": "https://github.com/grims-dev/discord-bot-markov"
 }
