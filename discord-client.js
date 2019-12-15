@@ -5,11 +5,12 @@ const Discord = require('discord.js');
 
 const MarkovGeneratorWord = markov.MarkovGeneratorWord;
 const bot = new MarkovGeneratorWord(2, 50);
-const botCommand = discordSetup.command;
+const botToken = discordSetup.token.trim();
+const botCommand = discordSetup.command.trim();
 
 const client = new Discord.Client();
 
-client.login(discordSetup.token);
+client.login(botToken);
 
 client.on('ready', () => {
   const lines = fs.readFileSync("log.txt").toString().split('\n');
