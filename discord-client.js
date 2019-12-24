@@ -41,7 +41,7 @@ client.on('message', message => {
 
       // bonus: very small % chance of replying to non-request
       if (Math.random() > 0.97) {
-        message.channel.send(bot.generate(userMessage.tokenize()[0]));
+        message.channel.send(bot.generate(userMessage.tokenize().choice()));
       }
     }
   }
