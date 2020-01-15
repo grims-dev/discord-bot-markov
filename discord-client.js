@@ -7,6 +7,7 @@ const MarkovGeneratorWord = markov.MarkovGeneratorWord;
 const bot = new MarkovGeneratorWord(2, 50);
 const botToken = discordSetup.token.trim();
 const botCommand = discordSetup.command.trim();
+let timeCheck = new Date().getTime();
 
 const client = new Discord.Client();
 
@@ -39,9 +40,10 @@ client.on('message', message => {
         bot.feed(userMessage);
       }
 
-      // bonus: very small % chance of replying to non-request
-      if (Math.random() > 0.97) {
+      // bonus: very small % chance of replying to non-request after certain amount of time has passed
+      if (Math.random() > 0.98 && timeCheck < new Date().getTime() - 300000) {
         message.channel.send(bot.generate(userMessage.tokenize().choice()));
+        timeCheck = new Date().getTime();
       }
     }
   }
