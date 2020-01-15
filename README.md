@@ -1,10 +1,12 @@
 # Discord Markov Process
 
-A bot for [Discord](https://discordapp.com/) that generates messages based on recorded chat history using a Markov chain.
+A bot for [Discord](https://discordapp.com/) that generates messages based on recorded chat history, inspired by the Markov chain model.
+
+Special thanks to the [discord.js](https://discord.js.org) team for making it painless to work with Discord.
 
 ---
 
-## Setup
+## If you'd like to set up for yourself
 
 1. Download all the files
 1. Edit `discord-setup-example.js`
