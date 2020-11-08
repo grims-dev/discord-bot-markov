@@ -32,7 +32,8 @@ client.on('message', message => {
     // not a request; now we do some checks to see if it's worthy of being added to file/markov chain
     // we want to ignore bots (including self!) and disallow DM input
     if (message.author.bot == false && message.guild !== null) {
-      let userMessage = message.content.trim();
+      // trim and replace double spaces, line breaks, etc
+      let userMessage = message.content.trim().replace(/\s\s+/g, ' ');
 
       // only worth storing if 2 words or more
       if (userMessage.split(' ').length >= 2) {
