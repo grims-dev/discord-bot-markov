@@ -122,7 +122,19 @@ function MarkovGeneratorWord(n = 2, max = 50) {
       // Get the last N entries of the output; this is our new ngram that we'll use in the next iteration of the loop
       currentNgram = output.getNLastWords(this.n);
     }
-    // Here's what we got!
+
+    // ping removal
+    output = output.map(word => {
+      word = word.replace('@everyone', '@/everyone').replace('@here', '@/here');
+
+      // discord ping format: <@12345678901234567>
+      if (word.includes('<@!')) {
+        word = word.replace('<@!', '`<@!').replace('>', '>`');
+      }
+      return word;
+    });
+
+    // here's what we got!
     return output.join(' ').slice(0, 2000);
   }
 }
