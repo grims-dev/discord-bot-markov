@@ -123,7 +123,7 @@ function MarkovGeneratorWord(n = 2, max = 50) {
       currentNgram = output.getNLastWords(this.n);
     }
     // Here's what we got!
-    return output.join(' ');
+    return output.join(' ').slice(0, 2000);
   }
 }
 
