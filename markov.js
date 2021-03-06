@@ -123,19 +123,8 @@ function MarkovGeneratorWord(n = 2, max = 50) {
       currentNgram = output.getNLastWords(this.n);
     }
 
-    // ping removal
-    output = output.map(word => {
-      word = word.replace('@everyone', '@/everyone').replace('@here', '@/here');
-
-      // discord ping format: <@12345678901234567>
-      if (word.includes('<@!')) {
-        word = word.replace('<@!', '`<@!').replace('>', '>`');
-      }
-      return word;
-    });
-
     // here's what we got!
-    return output.join(' ').slice(0, 2000);
+    return output.join(' ');
   }
 }
 
