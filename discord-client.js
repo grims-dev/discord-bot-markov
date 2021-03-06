@@ -30,7 +30,7 @@ client.on('ready', () => {
 client.on('message', message => {
   if (message.content.startsWith(botCommand)) {
     const isStrictCommand = message.content.startsWith(botCommandStrict);
-    const botCommandToRemove = isStrictCommand ? botCommand : botCommandStrict;
+    const botCommandToRemove = isStrictCommand ? botCommandStrict : botCommand;
     // remove bot command and trim whitespace
     const userMessage = message.content.replace(botCommandToRemove, "").trim() || false;
     // generate user message with optional search parameter
