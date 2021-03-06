@@ -40,13 +40,13 @@ function MarkovGeneratorWord(n = 2, max = 50) {
   }
 
   // Generate a text from the information ngrams
-  this.generate = function (search = false) {
+  this.generate = function (search = false, isStrict = false) {
     let ngramValues = this.ngramValues; // local variable version that can be manipulated
     let currentNgram = ""; // current term being used
     let output = []; // array of tokens that we'll add to on each run and join at the end
 
     if (search) {
-      let searchTokens = search.trim().clean().tokenize(); //array of clean search tokens
+      let searchTokens = isStrict ? search.trim().tokenize() : search.trim().clean().tokenize(); //array of clean search tokens
       let searchFirstWord = searchTokens[0];
 
       for (let i = 0; i < searchTokens.length; i++) {
@@ -57,11 +57,11 @@ function MarkovGeneratorWord(n = 2, max = 50) {
         let searchNgram = searchTokens.slice(i, i + this.n).join(' ');
 
         // filter where similar
-        let searchResults = ngramValues.filter(ngram => ngram.clean().startsWith(searchNgram));
+        let searchResults = ngramValues.filter(ngram => (isStrict ? ngram : ngram.clean()).startsWith(searchNgram));
         if (!searchResults.length) {
           if (isFirstRun) {
             // check if the first word matches
-            searchResults = ngramValues.filter(ngram => ngram.split(' ')[0].clean().startsWith(searchFirstWord));
+            searchResults = ngramValues.filter(ngram => (isStrict ? ngram.split(' ')[0] : ngram.split(' ')[0].clean()).startsWith(searchFirstWord));
             if (!searchResults.length) break;
           } else {
             break;
@@ -69,9 +69,9 @@ function MarkovGeneratorWord(n = 2, max = 50) {
         }
 
         // filter further where exact
-        let searchResultsExact = searchResults.filter(ngram => ngram.clean() === searchNgram);
+        let searchResultsExact = searchResults.filter(ngram => (isStrict ? ngram : ngram.clean()) === searchNgram);
         if (isFirstRun && !searchResultsExact.length) {
-          searchResultsExact = searchResults.filter(ngram => ngram.split(' ')[0].clean() === searchFirstWord)
+          searchResultsExact = searchResults.filter(ngram => (isStrict ? ngram.split(' ')[0] : ngram.split(' ')[0].clean()) === searchFirstWord)
         }
 
         let searchResult = searchResultsExact.choice() || searchResults.choice();

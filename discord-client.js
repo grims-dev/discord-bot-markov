@@ -7,6 +7,7 @@ const MarkovGeneratorWord = markov.MarkovGeneratorWord;
 const bot = new MarkovGeneratorWord(2, 50);
 const botToken = discordSetup.token.trim();
 const botCommand = discordSetup.command.trim();
+const botCommandStrict = botCommand + ".strict";
 const messageOptions = {
   disableMentions: 'everyone',
   split: true,
@@ -28,18 +29,20 @@ client.on('ready', () => {
 
 client.on('message', message => {
   if (message.content.startsWith(botCommand)) {
+    const isStrictCommand = message.content.startsWith(botCommandStrict);
+    const botCommandToRemove = isStrictCommand ? botCommand : botCommandStrict;
     // remove bot command and trim whitespace
-    let userMessage = message.content.replace(botCommand, "").trim() || false;
+    const userMessage = message.content.replace(botCommandToRemove, "").trim() || false;
     // generate user message with optional search parameter
     message.channel.startTyping();
-    message.channel.send(bot.generate(userMessage), messageOptions)
+    message.channel.send(bot.generate(userMessage, isStrictCommand), messageOptions)
       .then(() => message.channel.stopTyping());
   } else {
     // not a request; now we do some checks to see if it's worthy of being added to file/markov chain
     // we want to ignore bots (including self!) and disallow DM input
     if (message.author.bot == false && message.guild !== null) {
       // trim and replace double spaces, line breaks, etc
-      let userMessage = message.content.trim().replace(/\s\s+/g, ' ');
+      const userMessage = message.content.trim().replace(/\s\s+/g, ' ');
 
       // only worth storing if 2 words or more
       if (userMessage.split(' ').length >= 2) {
