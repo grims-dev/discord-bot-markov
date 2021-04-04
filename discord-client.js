@@ -34,9 +34,7 @@ client.on('message', message => {
     // remove bot command and trim whitespace
     const userMessage = message.content.replace(botCommandToRemove, "").trim() || false;
     // generate user message with optional search parameter
-    message.channel.startTyping();
-    message.channel.send(bot.generate(userMessage, isStrictCommand), messageOptions)
-      .then(() => message.channel.stopTyping());
+    message.channel.send(bot.generate(userMessage, isStrictCommand), messageOptions);
   } else {
     // not a request; now we do some checks to see if it's worthy of being added to file/markov chain
     // we want to ignore bots (including self!) and disallow DM input
@@ -52,9 +50,7 @@ client.on('message', message => {
 
       // bonus: very small % chance of replying to non-request after certain amount of time has passed
       if (Math.random() > 0.98 && timeCheck < new Date().getTime() - 300000) {
-        message.channel.startTyping();
-        message.channel.send(bot.generate(userMessage.tokenize().choice()), messageOptions)
-          .then(() => message.channel.stopTyping());
+        message.channel.send(bot.generate(userMessage.tokenize().choice()), messageOptions);
         timeCheck = new Date().getTime();
       }
     }
