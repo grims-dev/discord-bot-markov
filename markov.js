@@ -42,7 +42,7 @@ function MarkovGeneratorWord(n = 2, max = 50) {
   // Generate a text from the information ngrams
   this.generate = function (search = false, isStrict = false) {
     let ngramValues = this.ngramValues; // local variable version that can be manipulated
-    let currentNgram = ""; // current term being used
+    let currentNgram = ''; // current term being used
     let output = []; // array of tokens that we'll add to on each run and join at the end
 
     if (search) {
